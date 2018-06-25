@@ -9,7 +9,7 @@ use Proxy\Html;
 
 class VimeoPlugin extends AbstractPlugin {
 
-	protected $url_pattern = '/^(vimeo\.com|gcs-vimeo\.akamaized\.net)$/i';
+	protected $url_pattern = '/^(vimeo\.com|gcs-vimeo\.akamaized\.net|fpdl\.vimeocdn\.com)$/i';
 	
 	public function onBeforeRequest(ProxyEvent $event){
 		$request = $event['request'];
@@ -17,7 +17,7 @@ class VimeoPlugin extends AbstractPlugin {
 		$request_url = $request->getUri();
 		// get request hostname
 		$request_hostname = parse_url($request_url, PHP_URL_HOST);
-		if ($request_hostname ==='gcs-vimeo.akamaized.net') {
+		if ($request_hostname ==='gcs-vimeo.akamaized.net' || $request_hostname ==='fpdl.vimeocdn.com') {
 			// if it is akamai, clear cookies
 			$event['request']->headers->remove('Cookie');
 		}
